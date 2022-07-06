@@ -8,12 +8,17 @@ import {
   Param,
 } from '@nestjs/common';
 import { CreateTodoDto } from './dto/create-todo.dto';
+import { TodosService } from './todos.service';
+import { Todo } from './interfaces/todo.interface';
 
 @Controller('todos')
 export class TodosController {
+
+constructor(private readonly todoService: TodosService) {}
+
   @Get()
-  findAll(): string {
-    return 'Get all todos';
+  findAll(): Todo[] {
+    return this.todoService.findAll();
   }
 
   @Get(':id')
