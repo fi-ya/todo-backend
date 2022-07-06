@@ -19,4 +19,8 @@ export class TodosService {
   findAll(): Todo[] {
     return this.todos;
   }
+
+  findOne(id: string): Todo {
+    return this.todos.find(todo => todo.id === id);
+  }
 }

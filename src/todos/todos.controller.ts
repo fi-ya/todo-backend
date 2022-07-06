@@ -22,8 +22,9 @@ constructor(private readonly todoService: TodosService) {}
   }
 
   @Get(':id')
-  findOne(@Param('id') id): string {
-    return `Todo ${id}`;
+  findOne(@Param('id') id): Todo {
+    // return `Todo ${id}`;
+    return this.todoService.findOne(id);
   }
 
   @Post()
