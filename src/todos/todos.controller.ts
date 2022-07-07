@@ -9,36 +9,38 @@ import {
 } from '@nestjs/common';
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { TodosService } from './todos.service';
-import { Todo } from './interfaces/todo.interface';
+import { ITodo } from './interfaces/todo.interface';
+import { throws } from 'assert';
 
 @Controller('todos')
 export class TodosController {
-
-constructor(private readonly todoService: TodosService) {}
+  constructor(private readonly todoService: TodosService) {}
 
   @Get()
-  findAll(): Todo[] {
+  findAll(): Promise<ITodo[]> {
     return this.todoService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id): Todo {
-    // return `Todo ${id}`;
-    return this.todoService.findOne(id);
+  findOne(@Param('id') id): Promise<ITodo> {
+    return this.todoService.findOne(parseInt(id));
   }
 
   @Post()
-  create(@Body() createTodoDto: CreateTodoDto): string {
-    return `Todo: ${createTodoDto.description} Completed: ${createTodoDto.completed}`;
+  create(@Body() createTodoDto: CreateTodoDto): Promise<ITodo> {
+    return this.todoService.create(createTodoDto);
   }
 
   @Delete(':id')
-  delete(@Param('id') id): string {
-    return `Delete ${id}`;
+  delete(@Param('id') id): Promise<ITodo> {
+    return this.todoService.delete(parseInt(id));
   }
 
   @Put(':id')
-  update(@Body() updateTodoDto: CreateTodoDto, @Param('id') id): string {
-    return `Update ${id} - Description: ${updateTodoDto.description}`;
+  update(
+    @Body() updateTodoDto: CreateTodoDto,
+    @Param('id') id,
+  ): Promise<ITodo> {
+    return this.todoService.update(id, updateTodoDto);
   }
 }
