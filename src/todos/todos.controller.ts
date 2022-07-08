@@ -10,7 +10,6 @@ import {
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { TodosService } from './todos.service';
 import { ITodo } from './interfaces/todo.interface';
-import { throws } from 'assert';
 
 @Controller('todos')
 export class TodosController {
